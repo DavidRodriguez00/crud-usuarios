@@ -1,4 +1,4 @@
-<div class="container mt-5 pb-5">
+<div class="container py-5">
     <header class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
         <div>
             <h2 class="fw-bold text-dark mb-1">
@@ -9,8 +9,8 @@
 
         <div class="header-actions">
             <a routerLink="/newuser"
-                class="btn btn-primary btn-lg px-4 shadow rounded-pill d-flex align-items-center gap-2">
-                <i class="bi bi-person-plus-fill fs-5"></i>
+                class="btn btn-primary btn-lg px-4 shadow-sm rounded-pill d-flex align-items-center gap-2">
+                <i class="bi bi-person-plus-fill"></i>
                 <span>Nuevo Usuario</span>
             </a>
         </div>
@@ -18,13 +18,14 @@
 
     <div class="row mb-5 justify-content-center">
         <div class="col-12 col-md-8 col-lg-6">
-            <div class="search-container position-relative shadow-sm bg-white rounded-pill border">
-                <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-                <input type="text" class="form-control form-control-lg ps-5 border-0 rounded-pill py-3 shadow-none"
+            <div class="search-container position-relative bg-white shadow-sm">
+                <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-4 text-muted"></i>
+                <input type="text"
+                    class="form-control form-control-lg ps-5 border-0 rounded-pill py-3 shadow-none bg-transparent"
                     placeholder="Buscar por nombre, usuario o email..." (input)="onSearch($event)">
 
                 <span
-                    class="position-absolute top-50 end-0 translate-middle-y me-3 badge bg-light text-dark border rounded-pill py-2 px-3">
+                    class="position-absolute top-50 end-0 translate-middle-y me-3 badge rounded-pill bg-light text-dark border py-2 px-3 d-none d-sm-block">
                     {{ filteredUsers.length }} resultados
                 </span>
             </div>
@@ -33,23 +34,24 @@
 
     <div class="row g-4">
         @for (user of filteredUsers; track user.id) {
-        <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+        <div class="col-12 col-sm-6 col-lg-4 col-xl-3 animate-card">
             <div class="card user-card border-0 shadow-sm h-100">
-                <div class="card-body p-4 d-flex flex-column">
+                <div class="card-body p-4 d-flex flex-column align-items-center">
 
-                    <div class="avatar-frame mx-auto mb-3">
+                    <div class="avatar-frame mb-3">
                         <img [src]="user.image" [alt]="user.first_name" class="main-avatar" #userImg
                             (error)="userImg.src = 'https://ui-avatars.com/api/?name=' + user.first_name + '&background=random&color=fff'">
                     </div>
 
-                    <span class="glass-badge mb-2 mx-auto">@{{ user.username }}</span>
+                    <span class="glass-badge mb-3">@{{ user.username }}</span>
 
-                    <div class="text-center mb-4">
+                    <div class="text-center mb-4 w-100">
                         <h5 class="fw-bold text-dark text-truncate mb-1">
                             {{ user.first_name }} {{ user.last_name }}
                         </h5>
-                        <div class="email-chip mx-auto px-3 py-1 rounded-pill">
-                            <i class="bi bi-envelope me-1"></i> {{ user.email }}
+                        <div class="email-chip px-3 py-1 rounded-pill">
+                            <i class="bi bi-envelope me-2"></i>
+                            <span class="text-truncate">{{ user.email }}</span>
                         </div>
                     </div>
 
@@ -60,17 +62,19 @@
                         <a [routerLink]="['/updateuser', user.id]" class="btn-icon btn-edit" title="Editar">
                             <i class="bi bi-pencil-fill"></i>
                         </a>
-                        <a (click)="deleteUser(user.id)" class="btn-icon btn-delete" title="Eliminar">
+                        <button (click)="deleteUser(user.id)" class="btn-icon btn-delete" title="Eliminar">
                             <i class="bi bi-trash3-fill"></i>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
         } @empty {
         <div class="col-12 text-center py-5">
-            <i class="bi bi-person-x fs-1 text-muted opacity-50"></i>
-            <p class="mt-3 text-muted fw-medium">No se encontraron usuarios que coincidan con la búsqueda.</p>
+            <div class="bg-light d-inline-block p-4 rounded-circle mb-3">
+                <i class="bi bi-person-x fs-1 text-muted"></i>
+            </div>
+            <p class="text-muted fw-medium">No se encontraron usuarios que coincidan con la búsqueda.</p>
         </div>
         }
     </div>

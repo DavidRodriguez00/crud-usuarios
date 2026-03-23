@@ -1,1 +1,96 @@
-<p>user-form works!</p>
+<div class="bio-main-container">
+    <div class="detail-wrapper">
+
+        <nav class="detail-nav-bar">
+            <button (click)="goBack()" class="btn-detail-back">
+                <i class="bi bi-chevron-left"></i>
+                Volver
+            </button>
+            <div class="nav-divider"></div>
+            <span class="nav-title">{{ title }}</span>
+        </nav>
+
+        <main class="detail-profile-card">
+            <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+                <section class="profile-header-section">
+                    <div class="profile-avatar-wrapper">
+                        <img [src]="currentImage" (error)="handleImageError($event)" class="profile-avatar-img">
+                        <div class="status-badge-edit">
+                            <i class="bi bi-camera-fill"></i>
+                        </div>
+                    </div>
+                    <div class="profile-name-area">
+                        <h1 class="profile-full-name">{{ title }}</h1>
+                        <p class="profile-username">Gestión de datos</p>
+                    </div>
+                </section>
+
+                <section class="profile-details-section">
+                    <h2 class="section-title">Información del Usuario</h2>
+
+                    <div class="details-grid">
+
+                        <div class="detail-info-item">
+                            <div class="detail-icon"><i class="bi bi-person"></i></div>
+                            <div class="detail-info-text">
+                                <label>Nombre</label>
+                                <input type="text" formControlName="first_name" class="form-input-clean"
+                                    placeholder="Ej. Norma">
+                            </div>
+                        </div>
+
+                        <div class="detail-info-item">
+                            <div class="detail-icon"><i class="bi bi-person-badge"></i></div>
+                            <div class="detail-info-text">
+                                <label>Apellidos</label>
+                                <input type="text" formControlName="last_name" class="form-input-clean"
+                                    placeholder="Ej. Torres">
+                            </div>
+                        </div>
+
+                        <div class="detail-info-item">
+                            <div class="detail-icon"><span style="font-weight: 800; font-size: 1rem;">@</span></div>
+                            <div class="detail-info-text">
+                                <label>Nombre de Usuario</label>
+                                <input type="text" formControlName="username" class="form-input-clean"
+                                    placeholder="usuario123">
+                            </div>
+                        </div>
+
+                        <div class="detail-info-item">
+                            <div class="detail-icon"><i class="bi bi-envelope"></i></div>
+                            <div class="detail-info-text">
+                                <label>Correo Electrónico</label>
+                                <input type="email" formControlName="email" class="form-input-clean"
+                                    placeholder="email@peticiones.online">
+                            </div>
+                        </div>
+
+                        <div class="detail-info-item" style="grid-column: 1 / -1;">
+                            <div class="detail-icon"><i class="bi bi-link-45deg"></i></div>
+                            <div class="detail-info-text">
+                                <label>URL Imagen de Perfil</label>
+                                <input type="text" formControlName="image" class="form-input-clean"
+                                    placeholder="https://...">
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <footer class="profile-actions-bar">
+                    <button type="submit" class="btn-action btn-edit-profile" [disabled]="userForm.invalid">
+                        <i class="bi bi-check-lg"></i>
+                        {{ buttonText }}
+                    </button>
+                    <button type="button" (click)="goBack()" class="btn-action btn-delete-profile">
+                        <i class="bi bi-x-lg"></i>
+                        Cancelar
+                    </button>
+                </footer>
+
+            </form>
+        </main>
+    </div>
+</div>
