@@ -1,0 +1,128 @@
+/* --- CONTENEDOR DE BÚSQUEDA --- */
+.search-container {
+    background: #ffffff;
+    border-radius: 50px;
+    /* Forma de píldora */
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    /* Suaviza todos los cambios de estado */
+}
+
+/* Efecto cuando el usuario hace clic dentro del buscador */
+.search-container:focus-within {
+    box-shadow: 0 10px 25px rgba(13, 110, 253, 0.1) !important;
+    border-color: rgba(13, 110, 253, 0.2);
+    transform: translateY(-2px);
+    /* Pequeño salto hacia arriba */
+}
+
+/* Cambia el color del icono de lupa solo cuando el buscador está activo */
+.search-container:focus-within .bi-search {
+    color: #0d6efd !important;
+}
+
+/* --- TARJETA DE USUARIO --- */
+.user-card {
+    border-radius: 1.5rem;
+    background: #ffffff;
+    /* Efecto "Bouncy": curva de transición que rebota ligeramente al final */
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+}
+
+.user-card:hover {
+    transform: translateY(-10px);
+    /* La tarjeta sube al pasar el ratón */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* --- MARCO DEL AVATAR (Con Gradiente) --- */
+.avatar-frame {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    padding: 5px;
+    /* Crea el espacio para que se vea el borde degradado */
+    background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
+    transition: transform 0.4s ease;
+    box-shadow: 0 8px 15px rgba(13, 110, 253, 0.2);
+}
+
+/* Animación combinada: el avatar escala y rota levemente al hacer hover en la tarjeta */
+.user-card:hover .avatar-frame {
+    transform: scale(1.05) rotate(2deg);
+}
+
+.main-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    /* Evita que la foto se deforme */
+    border: 4px solid #fff;
+    /* "Corta" el degradado para dar limpieza */
+    background-color: #fff;
+}
+
+/* --- BADGE GLASSMORPHISM --- */
+.glass-badge {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px);
+    /* Desenfoque sutil tras el nombre */
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: #212529;
+}
+
+/* --- BOTONES DE ACCIÓN --- */
+.btn-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    /* Cuadrado suavizado */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    color: #adb5bd;
+    transition: all 0.2s ease;
+}
+
+/* Colores específicos según la acción al pasar el ratón */
+.btn-view:hover {
+    background: #0d6efd;
+    color: white;
+}
+
+.btn-edit:hover {
+    background: #ffc107;
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #dc3545;
+    color: white;
+}
+
+/* --- ANIMACIÓN DE ENTRADA --- */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+        /* Empieza abajo y transparente */
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        /* Termina en su posición original */
+    }
+}
+
+.col-12 {
+    /* Aplica la animación cuando los elementos aparecen en el DOM */
+    animation: slideUp 0.5s ease-out forwards;
+}
