@@ -1,59 +1,180 @@
 # CrudUsuarios
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.3.
+Aplicación CRUD de ejemplo con Angular, llamada “BIO-COMMAND”.
+Permite crear, listar, filtrar, actualizar y eliminar usuarios usando una API externa y caché en LocalStorage.
 
-## Development server
+## 🌟 Tabla de contenidos
 
-To start a local development server, run:
+1. [Descripción](#descripción)
+2. [Tecnologías](#tecnologías)
+3. [Instalación](#instalación)
+4. [Estructura del proyecto](#estructura-del-proyecto)
+5. [Rutas y componentes](#rutas-y-componentes)
+6. [Servicios e interacción con API](#servicios-e-interacción-con-api)
+7. [Flujo principal de la app](#flujo-principal-de-la-app)
+8. [Pruebas](#pruebas)
+9. [Mejoras sugeridas](#mejoras-sugeridas)
+
+---
+
+## 📝 Descripción
+
+`CrudUsuarios` es un proyecto Angular standalone que ofrece:
+
+- Visualización de directorio de usuarios.
+- Búsqueda en tiempo real (filtrado local).
+- Creación y edición de usuario con formulario reactivo.
+- Visualización de detalle individual.
+- Eliminación desde lista y detalle.
+- Sincronización de caché con `localStorage`.
+
+La UI usa Bootstrap e iconos de Bootstrap Icons y además maneja estados de carga y fallback de imagenes.
+
+---
+
+## 🛠️ Tecnologías
+
+- Angular (Standalone components)
+- TypeScript
+- RxJS
+- Angular Router
+- Angular Reactive Forms
+- Angular HttpClient
+- localStorage
+- CSS / Bootstrap
+
+---
+
+## 🚀 Instalación
+
+1. Clonar repo:
 
 ```bash
-ng serve
+git clone <URL_DEL_REPO>
+cd crud-usuarios
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+2. Instalar dependencias:
 
 ```bash
-ng generate component component-name
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+3. Servir localmente:
 
 ```bash
-ng generate --help
+npm start
 ```
 
-## Building
+4. Abrir navegador:
 
-To build the project run:
+- `http://localhost:4200/`
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 📁 Estructura del proyecto
 
-## Running unit tests
+- `src/app/app.ts`: componente app root (standalone + router).
+- `src/app/app.routes.ts`: configuración de rutas.
+- `src/app/components/home/*`: listado principal + búsqueda + eliminación.
+- `src/app/components/user-detail/*`: vista detallada de usuario + eliminar + ir atrás.
+- `src/app/components/user-form/*`: creación + edición de usuario con `FormGroup`.
+- `src/app/services/users.ts`: servicio de API y LocalStorage.
+- `src/app/interfaces/user.ts`: interface `User`.
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+---
 
-```bash
-ng test
-```
+## 🧭 Rutas y componentes
 
-## Running end-to-end tests
+- `/home` → `HomeComponent`
+- `/user/:id` → `UserDetailComponent`
+- `/newuser` → `UserFormComponent` (crear)
+- `/updateuser/:id` → `UserFormComponent` (editar)
+- `**` → redirige a `/home`
 
-For end-to-end (e2e) testing, run:
+### HomeComponent (`src/app/components/home/home.ts`)
 
-```bash
-ng e2e
-```
+- Propiedades:
+  - `users: User[]` nda global.
+  - `filteredUsers: User[]` resultados en búsqueda.
+- `ngOnInit`: carga localStorage y luego API.
+- `onSearch(event)`: filtra por nombre, apellidos, username, email.
+- `deleteUser(id)`: `confirm()`, `usersService.delete` y actualización de arrays locales.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### UserDetailComponent (`src/app/components/user-detail/user-detail.ts`)
 
-## Additional Resources
+- Lee `id` por `ActivatedRoute`.
+- Carga usuario por `getById(id)`.
+- `deleteUser()`: elimina y navega a `/home`.
+- `goBack()`: navegación con `Location.back()`.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### UserFormComponent (`src/app/components/user-form/user-form.ts`)
+
+- `FormGroup` con campos: `first_name`, `last_name`, `username`, `email`, `image`, `password`.
+- `isUpdate` decide flujo.
+- `ngOnInit`: verifica ruta para modo create/update.
+- `onSubmit`: POST o PUT según modo.
+- `currentImage` y `handleImageError` para preview y fallback.
+
+---
+
+## 🌐 Servicio API (UsersService)
+
+`src/app/services/users.ts`
+
+- `getAll()`: GET `/api/users`, guarda `response.results` en `localStorage`.
+- `getById(id)`: GET `/api/users/:id`, normaliza `results/data`, fallback localStorage en error.
+- `create(user)`: POST `/api/users`.
+- `update(user)`: PUT `/api/users/:id`, actualiza `localStorage` existiendo.
+- `delete(id)`: DELETE `/api/users/:id`, remueve cache local.
+- `getLocalStorageUsers()`: lee JSON local.
+- `getLocalUserById(id)`: busca en cache.
+
+---
+
+## 🔁 Flujo principal de data
+
+1. `HomeComponent` monta, lee cache y renderiza rapido.
+2. `getAll()` refresca desde API, actualiza lista y cache.
+3. `onSearch()` mantiene `users` inmutables + `filteredUsers` filtrados.
+4. `deleteUser()` elimina local y remoto.
+5. `UserFormComponent` crea o edita y redirige a `/home`.
+6. `UserDetailComponent` muestra ficha y permite borrar.
+
+---
+
+## 🧪 Pruebas
+
+- `npm test` ➜ ejecuta tests (Jasmine/Karma o Vitest según configuración actual).
+- El proyecto ya incluye archivos spec para:
+  - `src/app/app.spec.ts`
+  - `src/app/components/home/home.spec.ts`
+  - `src/app/components/user-detail/user-detail.spec.ts`
+  - `src/app/components/user-form/user-form.spec.ts`
+  - `src/app/services/users.spec.ts`
+
+> Nota: ajusta las pruebas si tu API cambia los códigos de respuesta o la forma de la carga en local.
+
+---
+
+## 💡 Mejoras sugeridas (roadmap)
+
+- Añadir paginación + ordenación.
+- Añadir estados de carga (`loading`) y mensajes de error UI.
+- Refactor a RxJS `signal` / `ngrx` / `@ngrx/component` para rendimiento.
+- Validación avanzada (nombre único, contraseña fuerte, URL imagen válida).
+- Paginación en servidor y debounce de búsqueda.
+- Pruebas E2E (`Cypress`, `Playwright`).
+
+---
+
+## 📌 Notas importantes
+
+- El código ya utiliza la técnica de `ChangeDetectorRef.detectChanges()` para forzar render cuando se actualiza desde callback asíncrono, útil sobretodo con datos cargados fuera de Angular zone.
+- Mantener `localStorage` sincronizado evita pérdida de datos en recarga.
+
+---
+
+## 🖊️ Licencia
+
+Este proyecto es un ejemplo educativo de implementación CRUD con Angular.
