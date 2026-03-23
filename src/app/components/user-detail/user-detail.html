@@ -1,1 +1,67 @@
-<p>user-detail works!</p>
+<div class="bio-main-container">
+    @if (user) {
+    <div class="detail-wrapper">
+
+        <nav class="detail-nav-bar">
+            <button (click)="goBack()" class="btn-detail-back">
+                <i class="bi bi-chevron-left"></i>
+                Volver al Directorio
+            </button>
+            <div class="nav-divider"></div>
+            <span class="nav-title">Perfil de Integrante</span>
+        </nav>
+
+        <main class="detail-profile-card">
+
+            <section class="profile-header-section">
+                <div class="profile-avatar-wrapper">
+                    <img [src]="user.image" [alt]="user.first_name" class="profile-avatar-img">
+                    <div class="status-badge-online"></div>
+                </div>
+
+                <div class="profile-name-area">
+                    <h1 class="profile-full-name">{{ user.first_name }} {{ user.last_name }}</h1>
+                    <p class="profile-username">@{{ user.username }}</p>
+                    <span class="id-badge">ID: #{{ user.id || 'N/A' }}</span>
+                </div>
+            </section>
+
+            <section class="profile-details-section">
+                <h2 class="section-title">Información del Sistema</h2>
+                <div class="details-grid">
+                    <div class="detail-info-item">
+                        <i class="bi bi-envelope detail-icon"></i>
+                        <div class="detail-info-text">
+                            <label>Correo Electrónico</label>
+                            <p>{{ user.email }}</p>
+                        </div>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <i class="bi bi-shield-check detail-icon"></i>
+                        <div class="detail-info-text">
+                            <p style="-webkit-text-security: disc;">{{ user.password }}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="profile-actions-bar">
+                <a [routerLink]="['/updateuser', user.id]" class="btn-action btn-edit-profile">
+                    <i class="bi bi-pencil-fill"></i>
+                    Editar Perfil
+                </a>
+                <button (click)="deleteUser()" class="btn-action btn-delete-profile">
+                    <i class="bi bi-trash3-fill"></i>
+                    Eliminar Usuario
+                </button>
+            </footer>
+        </main>
+    </div>
+    } @else {
+    <div class="sync-loader-container">
+        <div class="bio-sync-spinner"></div>
+        <p>Sincronizando con Bio-Command...</p>
+    </div>
+    }
+</div>
