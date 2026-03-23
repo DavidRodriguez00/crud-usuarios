@@ -1,22 +1,23 @@
-<nav class="navbar navbar-expand-lg sticky-top custom-navbar">
+<nav class="navbar navbar-expand-lg sticky-top custom-navbar shadow-sm">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/home">
       <div class="logo-icon">
-        <i class="bi bi-cpu-fill"></i>
+        <i class="bi bi-cpu-fill fs-5"></i>
       </div>
-      <span class="fw-bold ls-1 text-white">BIO-COMMAND</span>
+      <span class="fw-bold ls-1 text-white mb-0">BIO-COMMAND</span>
     </a>
 
     <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
-      data-bs-target="#navbarNav">
+      data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 gap-2">
         <li class="nav-item">
-          <a class="nav-link px-3" routerLink="/home" routerLinkActive="active-link">
-            <i class="bi bi-house-door me-1"></i> Dashboard
+          <a class="nav-link px-3" routerLink="/home" routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{exact: true}">
+            <i class="bi bi-house-door me-2"></i> Dashboard
           </a>
         </li>
       </ul>
@@ -25,5 +26,7 @@
 </nav>
 
 <main class="main-content">
-  <router-outlet></router-outlet>
+  <div class="animate-content">
+    <router-outlet></router-outlet>
+  </div>
 </main>
