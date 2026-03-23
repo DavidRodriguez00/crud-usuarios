@@ -1,0 +1,73 @@
+/* --- BARRA DE NAVEGACIÓN --- */
+.custom-navbar {
+    /* Color de fondo oscuro con un 95% de opacidad */
+    background: rgba(33, 37, 41, 0.95);
+    /* Glassmorphism: desenfoca lo que hay detrás del elemento */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* Soporte para navegadores Safari */
+    /* Un borde sutil en la parte inferior para dar profundidad */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    /* Espaciado interno superior e inferior */
+    padding: 0.8rem 0;
+}
+
+/* --- ESTILO DEL LOGO --- */
+.logo-icon {
+    width: 35px;
+    height: 35px;
+    /* Degradado lineal moderno entre dos tonos de azul */
+    background: linear-gradient(135deg, #0d6efd, #0dcaf0);
+    /* Bordes redondeados suavizados */
+    border-radius: 10px;
+    /* Centrado perfecto del contenido dentro del cuadro */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+/* --- UTILIDAD DE TEXTO --- */
+.ls-1 {
+    /* Aumenta el espacio entre letras */
+    letter-spacing: 1px;
+}
+
+/* --- ENLACES DE NAVEGACIÓN --- */
+.nav-link {
+    /* Blanco con 70% de opacidad para que no compita con el logo */
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-weight: 500;
+    /* Transición suave para cuando el usuario pasa el ratón (hover) */
+    transition: color 0.2s;
+    position: relative;
+    /* Necesario para posicionar el indicador ::after */
+}
+
+/* Estado al pasar el ratón o cuando el enlace está activo */
+.nav-link:hover,
+.active-link {
+    color: white !important;
+}
+
+/* --- INDICADOR DE PÁGINA ACTIVA --- */
+.active-link::after {
+    content: '';
+    /* Crea un elemento visual vacío */
+    position: absolute;
+    bottom: -5px;
+    /* Lo coloca justo debajo del texto */
+    left: 15px;
+    right: 15px;
+    height: 3px;
+    background: #0d6efd;
+    /* Color azul para resaltar */
+    border-radius: 10px;
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.main-content {
+    /* Asegura que el contenido ocupe el resto de la pantalla */
+    /* Resta la altura estimada de la navbar (70px) al total de la pantalla (100vh) */
+    min-height: calc(100vh - 70px);
+}
