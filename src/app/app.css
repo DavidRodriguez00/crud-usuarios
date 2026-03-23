@@ -1,73 +1,73 @@
 /* --- BARRA DE NAVEGACIÓN --- */
 .custom-navbar {
-    /* Color de fondo oscuro con un 95% de opacidad */
+    /* Fondo basado en el lienzo base con opacidad para el blur */
     background: rgba(33, 37, 41, 0.95);
-    /* Glassmorphism: desenfoca lo que hay detrás del elemento */
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    /* Soporte para navegadores Safari */
-    /* Un borde sutil en la parte inferior para dar profundidad */
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    /* Espaciado interno superior e inferior */
     padding: 0.8rem 0;
+}
+
+/* Ajuste para el botón de móvil (ahora sobre fondo claro) */
+.navbar-toggler-icon {
+    filter: none;
+    /* Quitamos el invert para que se vea oscuro en fondo claro */
 }
 
 /* --- ESTILO DEL LOGO --- */
 .logo-icon {
     width: 35px;
     height: 35px;
-    /* Degradado lineal moderno entre dos tonos de azul */
-    background: linear-gradient(135deg, #0d6efd, #0dcaf0);
-    /* Bordes redondeados suavizados */
+    /* Gradiente usando la identidad de marca: Blue a Cyan */
+    background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-cyan));
     border-radius: 10px;
-    /* Centrado perfecto del contenido dentro del cuadro */
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
 }
 
-/* --- UTILIDAD DE TEXTO --- */
 .ls-1 {
-    /* Aumenta el espacio entre letras */
     letter-spacing: 1px;
+    color: var(--color-text-dark);
+    font-weight: 700;
 }
 
 /* --- ENLACES DE NAVEGACIÓN --- */
 .nav-link {
-    /* Blanco con 70% de opacidad para que no compita con el logo */
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: white !important;
     font-weight: 500;
-    /* Transición suave para cuando el usuario pasa el ratón (hover) */
-    transition: color 0.2s;
+    transition: all 0.3s ease;
     position: relative;
-    /* Necesario para posicionar el indicador ::after */
+    display: flex;
+    align-items: center;
 }
 
-/* Estado al pasar el ratón o cuando el enlace está activo */
-.nav-link:hover,
-.active-link {
-    color: white !important;
+.nav-link:hover {
+    color: var(--color-brand-blue) !important;
 }
 
 /* --- INDICADOR DE PÁGINA ACTIVA --- */
+.active-link {
+    color: white !important;
+    font-weight: 600;
+}
+
 .active-link::after {
     content: '';
-    /* Crea un elemento visual vacío */
     position: absolute;
-    bottom: -5px;
-    /* Lo coloca justo debajo del texto */
-    left: 15px;
-    right: 15px;
+    bottom: -2px;
+    left: 1rem;
+    right: 1rem;
     height: 3px;
-    background: #0d6efd;
-    /* Color azul para resaltar */
+    background: var(--color-brand-blue);
     border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
 }
 
 /* --- CONTENEDOR PRINCIPAL --- */
 .main-content {
-    /* Asegura que el contenido ocupe el resto de la pantalla */
-    /* Resta la altura estimada de la navbar (70px) al total de la pantalla (100vh) */
-    min-height: calc(100vh - 70px);
+    min-height: calc(100vh - 72px);
+    background-color: var(--color-main-bg);
 }
